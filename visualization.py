@@ -1,1 +1,2 @@
-def visulize():
+def visualize():
+    print("visualization function")
