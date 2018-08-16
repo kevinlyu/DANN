@@ -49,10 +49,10 @@ def plot_embedding(X, y, d, title=None):
     for i in range(X.shape[0]):
         plt.text(X[i, 0], X[i, 1], str(y[i]), color=plt.cm.bwr(d[i]/1.), fontdict={"weight":"bold", "size":9})
 
-        plt.xticks([])
-        plt.yticks([])
+    plt.xticks([])
+    plt.yticks([])
 
-        if title is not None:
-            plt.title(title)
+    if title is not None:
+        plt.title(title)
         
-        plt.show()
+    plt.show()
