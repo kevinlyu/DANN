@@ -40,6 +40,7 @@ class Extractor(nn.Module):
         self.conv2_drop = nn.Dropout2d()
 
     def forward(self, x):
+        # expand mnist data from (1,28,28) to (3,28,28)
         x = x.expand(x.data.shape[0], 3, 28, 28)
         x = F.relu(F.max_pool2d(self.bn1(self.conv1(x)), 2))
         x = F.relu(F.max_pool2d(self.conv2_drop(self.bn2(self.conv2(x))), 2))

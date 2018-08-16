@@ -29,13 +29,15 @@ def visualize(feature_extractor, class_classifier, domain_discriminator, source_
 
     source_embedding = feature_extractor(source_data)
     target_embedding = feature_extractor(target_data)
-
-    tsne = TSNE(perplexity=30, n_components=2, init="pca", n_iter=3000)
+    
+    tsne = TSNE(perplexity=50, init="random", n_iter=5000)
 
     dann_tsne = tsne.fit_transform(np.concatenate(
         (source_embedding.cpu().detach().numpy(), target_embedding.cpu().detach().numpy())))
 
-    plot_embedding(dann_tsne, np.concatenate((source_label, target_label)), np.concatenate((source_tag, target_tag)), "DANN")
+    plot_embedding(dann_tsne, np.concatenate(
+        (source_label, target_label)), np.concatenate((source_tag, target_tag)), "DANN")
+
 
 def plot_embedding(X, y, d, title=None):
 
@@ -47,12 +49,16 @@ def plot_embedding(X, y, d, title=None):
     ax = plt.subplot(111)
 
     for i in range(X.shape[0]):
-        plt.text(X[i, 0], X[i, 1], str(y[i]), color=plt.cm.bwr(d[i]/1.), fontdict={"weight":"bold", "size":9})
+        plt.text(X[i, 0], X[i, 1], str(y[i]), color=plt.cm.bwr(
+            d[i]/1.), fontdict={"weight": "bold", "size": 9})
 
     plt.xticks([])
     plt.yticks([])
 
     if title is not None:
         plt.title(title)
-        
+
     plt.show()
+
+def plot_tsne():
+    print("to be continued")

@@ -16,7 +16,7 @@ target_loader = torch.utils.data.DataLoader(dataloader.MNISTM(
         transforms.Resize(28),
         transforms.ToTensor(),
         transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
-    ])), batch_size=100, shuffle=True)
+    ])), batch_size=250, shuffle=True)
 
 source_loader = torch.utils.data.DataLoader(datasets.MNIST(
     "../dataset/mnist/", train=True, download=True,
@@ -24,7 +24,7 @@ source_loader = torch.utils.data.DataLoader(datasets.MNIST(
         transforms.Resize(28),
         transforms.ToTensor(),
         transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
-    ])), batch_size=100, shuffle=True)
+    ])), batch_size=250, shuffle=True)
 
 
 # network components
@@ -44,16 +44,22 @@ class_criterion = nn.NLLLoss()
 domain_criterion = nn.NLLLoss()
 
 # optimizer
+'''
 optimizer = optim.SGD([{"params": feature_extractor.parameters()},
                        {"params": class_classifier.parameters()},
                        {"params": domain_discriminator.parameters()}], lr=0.01, momentum=0.9)
+'''
+
+optimizer = optim.Adam([{"params": feature_extractor.parameters()},
+                       {"params": class_classifier.parameters()},
+                       {"params": domain_discriminator.parameters()}], lr=0.001)
 
 # remember to set mode train() / eval()
 feature_extractor.train()
 class_classifier.train()
 domain_discriminator.train()
 
-total_epoch = 10
+total_epoch = 500
 
 for epoch in range(total_epoch):
     print("Epoch {}".format(epoch))
@@ -78,7 +84,6 @@ for epoch in range(total_epoch):
                                                 :, :, :], source_label[0:size]
         target_data, target_label = target_data[0:size,
                                                 :, :, :], target_label[0:size]
-
         # reset optimizer
         optimizer.zero_grad()
 
