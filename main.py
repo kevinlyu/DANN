@@ -53,7 +53,7 @@ feature_extractor.train()
 class_classifier.train()
 domain_discriminator.train()
 
-total_epoch = 100
+total_epoch = 10
 
 for epoch in range(total_epoch):
     print("Epoch {}".format(epoch))

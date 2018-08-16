@@ -33,7 +33,7 @@ def visualize(feature_extractor, class_classifier, domain_discriminator, source_
     tsne = TSNE(perplexity=30, n_components=2, init="pca", n_iter=3000)
 
     dann_tsne = tsne.fit_transform(np.concatenate(
-        (source_embedding.cpu().detach().numpy, target_embedding.cpu().detach().numpy)))
+        (source_embedding.cpu().detach().numpy(), target_embedding.cpu().detach().numpy())))
 
     plot_embedding(dann_tsne, np.concatenate((source_label, target_label)), np.concatenate((source_tag, target_tag)), "DANN")
 
