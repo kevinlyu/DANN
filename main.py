@@ -8,7 +8,7 @@ from sklearn.manifold import TSNE
 import numpy as np
 import model
 import dataloader
-import visualization
+import visualization as vs
 
 # data loader
 target_loader = torch.utils.data.DataLoader(dataloader.MNISTM(
@@ -117,3 +117,6 @@ for epoch in range(total_epoch):
         if(index+1) % 10 == 0:
             print("[{}/{}] total loss: {:.3f} \t class loss: {:.3f} \t domain loss: {:.3f}".format(
                 index*len(target_data), len(target_loader.dataset), loss.item(), class_loss.item(), domain_loss.item()))
+
+# plot training or testing set
+vs.visualize(feature_extractor, class_classifier, domain_discriminator, source_loader, target_loader)
